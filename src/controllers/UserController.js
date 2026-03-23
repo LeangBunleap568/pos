@@ -203,8 +203,8 @@ const sendOTP = async (req, res) => {
         const transporter = nodeMailer.createTransport({
             service: "gmail",
             auth: {
-                user: "leappuzumaki@gmail.com",
-                pass: "hjxd tdcg unuw gyau"
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         })
         //  step 6: set db to compare when user verify otp
@@ -214,7 +214,7 @@ const sendOTP = async (req, res) => {
         await userInfor.save()
         //  step 8: send email
         const mailOptions = {
-            from: "leappuzumaki@gmail.com",
+            from: process.env.EMAIL_USER,
             to: userInfor.email,
             subject: "🔐 Your Verification Code",
             html: `
