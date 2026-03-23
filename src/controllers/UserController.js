@@ -1,5 +1,5 @@
 const user = require("../models/User")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const logError = require("../service/service")
 const { isValid } = require("../service/prevent")
