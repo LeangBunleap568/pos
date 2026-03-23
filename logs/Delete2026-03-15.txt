@@ -1,0 +1,1 @@
+[15/03/2026 09:42:09] Missing where or truncate attribute in the options parameter of model.destroy.

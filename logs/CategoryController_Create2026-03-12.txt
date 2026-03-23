@@ -1,0 +1,5 @@
+[12/03/2026 01:28:39] notNull Violation: Category.code cannot be null
+[12/03/2026 01:30:45] Cannot destructure property 'code' of 'req.body' as it is undefined.
+[12/03/2026 01:30:46] Cannot destructure property 'code' of 'req.body' as it is undefined.
+[12/03/2026 01:35:42] Cannot destructure property 'code' of 'req.body' as it is undefined.
+[12/03/2026 10:44:26] Validation error

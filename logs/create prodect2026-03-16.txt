@@ -1,0 +1,1 @@
+[16/03/2026 15:37:37] brand_id.findByPk is not a function
