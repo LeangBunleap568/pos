@@ -30,7 +30,6 @@ category(app);
 app.get('/', (req, res) => {
     res.send('Backend Server is Running!');
 });
-
 // Startup Function
 const start = async () => {
     try {
@@ -51,6 +50,7 @@ const start = async () => {
         console.error('Failed to start server:', error);
         process.exit(1);
     }
+
 };
 
 start();
