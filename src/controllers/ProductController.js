@@ -63,8 +63,8 @@ const create = async (req, res) => {
             {
                 prd_id,
                 prd_name,
-                category_id: category_id || null,
-                brand_id: brand_id || null,
+                category_id: (category_id && category_id.trim() !== "") ? category_id : null,
+                brand_id: (brand_id && brand_id.trim() !== "") ? brand_id : null,
                 stock_date,
                 exp_date,
                 qty,
@@ -103,8 +103,8 @@ const update = async (req, res) => {
         if (!result) { return res.status(404).json({ message: "ID not Found" }) }
 
         if (prd_name !== undefined) result.prd_name = prd_name
-        if (category_id !== undefined) result.category_id = category_id || null
-        if (brand_id !== undefined) result.brand_id = brand_id || null
+        if (category_id !== undefined) result.category_id = (category_id && category_id.trim() !== "") ? category_id : null
+        if (brand_id !== undefined) result.brand_id = (brand_id && brand_id.trim() !== "") ? brand_id : null
         if (stock_date !== undefined) result.stock_date = stock_date
         if (exp_date !== undefined) result.exp_date = exp_date
         if (qty !== undefined) result.qty = qty
