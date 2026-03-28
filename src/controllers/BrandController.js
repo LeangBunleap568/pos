@@ -36,7 +36,7 @@ const Get = async (req, res) => {
 }
 const buildPhotoPath = (req, file) => {
     if (file) {
-        return `http://localhost:5000/assets/upload/${file.filename}`;
+        return `${process.env.BASE_URL || 'http://localhost:5000'}/assets/upload/${file.filename}`;
     }
     return null;
 };

@@ -3,7 +3,7 @@ const { Op, fn, col } = require('sequelize');
 const logError = require('../service/service');
 const buildPhotoPath = (file) => {
     if (file) {
-        return `http://localhost:5000/assets/upload/${file.filename}`;
+        return `${process.env.BASE_URL || 'http://localhost:5000'}/assets/upload/${file.filename}`;
     }
     return null;
 };

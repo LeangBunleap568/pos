@@ -1,7 +1,7 @@
 const { Get, create, getOne, login, update, delete_user, sendOTP, verifyOTP, resetPassword } = require("../controllers/UserController")
 const authMiddleware = require("../auth/middleware")
 
-userRoute = (app) => {
+const userRoute = (app) => {
     app.post('/api/user/login', login)
     app.post('/api/user/create', authMiddleware.validate_token(), create)
     app.get('/api/user/get', authMiddleware.validate_token(), Get)

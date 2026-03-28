@@ -1,7 +1,7 @@
 const { get, create, update, delete_ } = require("../controllers/ProductController")
 const { uploadPhoto } = require('../middleware/upload');
 
-Product = (app) => {
+const Product = (app) => {
     app.get("/api/product/get", get)
     app.post("/api/product/create", uploadPhoto, create)
     app.put("/api/product/update/:prd_id", uploadPhoto, update)

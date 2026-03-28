@@ -141,7 +141,9 @@ const update = async (req, res) => {
         }
         userInfor.username = username !== undefined ? username : userInfor.username
         userInfor.email = email !== undefined ? email : userInfor.email
-        userInfor.password = password !== undefined ? password : userInfor.password
+        if (password !== undefined) {
+            userInfor.password = await bcrypt.hash(password, 10)
+        }
         userInfor.status = status !== undefined ? status : userInfor.status
         await userInfor.save()
         res.status(200).json({
@@ -156,26 +158,30 @@ const update = async (req, res) => {
     }
 }
 const delete_user = async (req, res) => {
-    const { user_id } = req.params
-    if (isValid(user_id)) {
-        return res.json({
-            message: "User ID is required",
-            data: null
+    try {
+        const { user_id } = req.params
+        if (isValid(user_id)) {
+            return res.status(400).json({
+                message: "User ID is required",
+                data: null
+            })
+        }
+        const result = await user.findByPk(user_id)
+        if (!result) {
+            return res.status(404).json({
+                message: "User not found",
+                data: null
+            })
+        }
+        await result.destroy({ where: { user_id: user_id } })
+        res.status(200).json({
+            message: "User Delete Successfully!",
+            data: result
         })
     }
-    const result = await user.findByPk(user_id)
-    if (!result) {
-        return res.json({
-            message: "User not found",
-            data: null
-        })
+    catch (err) {
+        logError("delete_user", err, res)
     }
-    await result.destroy({ where: { user_id: user_id } })
-    res.json({
-        message: "User Delete Successfully!",
-        data: result
-    })
-
 }
 const sendOTP = async (req, res) => {
     try {
