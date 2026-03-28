@@ -1,5 +1,5 @@
 const { Op, fn, col } = require('sequelize');
-const Brand = require('../models/Brand');
+const { Brand } = require('../models');
 const logError = require('../service/service');
 const Get = async (req, res) => {
     try {
@@ -42,17 +42,29 @@ const buildPhotoPath = (req, file) => {
 };
 const Create = async (req, res) => {
     try {
+        console.log("Create Brand Request Body:", req.body);
         const { code, desc, category_id, remark } = req.body
         const photoUrl = buildPhotoPath(req, req.file);
+
+        if (!code) {
+            return res.status(400).json({ message: "Brand code is required" })
+        }
+
         const data = await Brand.findByPk(code)
         if (data) {
             return res.status(400).json({ message: "Brand code already exists" })
         }
+        const { Category } = require("../models");
+        const categoryExists = category_id ? await Category.findByPk(category_id) : null;
+        const finalCategoryId = categoryExists ? category_id : null;
+        
+        console.log("Saving Brand with Final Category ID:", finalCategoryId);
+
         const brandCreated = await Brand.create({
-            code,
-            desc,
-            category_id: (category_id && category_id.trim() !== "") ? category_id : null,
-            remark,
+            code: code.trim(),
+            desc: desc && desc.trim(),
+            category_id: finalCategoryId,
+            remark: remark && remark.trim(),
             photo: photoUrl
         })
         res.json({

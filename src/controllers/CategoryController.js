@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const Category = require('../models/Category');
+const { Category } = require('../models');
 const logError = require('../service/service');
 
 const Get = async (req, res) => {
@@ -32,6 +32,11 @@ const Get = async (req, res) => {
 const Create = async (req, res) => {
     try {
         const { code, desc, remark, status } = req.body;
+
+        if (!code) {
+            return res.status(400).json({ message: "Category code is required" });
+        }
+
         const existing = await Category.findByPk(code);
         if (existing) {
             return res.status(400).json({ message: "Category code already exists" });

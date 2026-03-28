@@ -12,11 +12,11 @@ const MasterProduct = sequelize.define('MasterProduct', {
         allowNull: true
     },
     category_id: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(100),
         allowNull: true
     },
     brand_id: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(100),
         allowNull: true
     },
     stock_date: {

@@ -12,12 +12,8 @@ const Brand = sequelize.define('Brand', {
         allowNull: true
     },
     category_id: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        references: {
-            model: 'tbl_category',
-            key: 'code'
-        }
+        type: DataTypes.STRING(100),
+        allowNull: true
     },
     remark: {
         type: DataTypes.STRING(255),

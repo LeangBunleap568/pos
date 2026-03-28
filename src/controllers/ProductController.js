@@ -1,4 +1,4 @@
-const products = require("../models/MasterProduct")
+const { MasterProduct: products } = require("../models")
 const { Op, fn, col } = require('sequelize');
 const logError = require('../service/service');
 const buildPhotoPath = (file) => {
@@ -51,6 +51,10 @@ const create = async (req, res) => {
         const { prd_id, prd_name, category_id, brand_id, stock_date, exp_date, qty, unit_cost, telegram, status, remark } = req.body
         const photoUrl = buildPhotoPath(req.file);
         
+        if (!prd_id) {
+            return res.status(400).json({ message: "Product ID (prd_id) is required" })
+        }
+        
         const data = await products.findByPk(prd_id)
         if (data) {
             return res.status(400).json({
@@ -59,19 +63,28 @@ const create = async (req, res) => {
             })
         }
         
+        const { Category, Brand, Telegram } = require("../models");
+        const categoryExists = category_id ? await Category.findByPk(category_id) : null;
+        const brandExists = brand_id ? await Brand.findByPk(brand_id) : null;
+        const telegramExists = telegram ? await Telegram.findByPk(telegram) : null;
+        
+        const finalCategoryId = categoryExists ? category_id : null;
+        const finalBrandId = brandExists ? brand_id : null;
+        const finalTelegramId = telegramExists ? telegram : null;
+
         const result = await products.create(
             {
-                prd_id,
-                prd_name,
-                category_id: (category_id && category_id.trim() !== "") ? category_id : null,
-                brand_id: (brand_id && brand_id.trim() !== "") ? brand_id : null,
+                prd_id: prd_id.trim(),
+                prd_name: prd_name && prd_name.trim(),
+                category_id: finalCategoryId,
+                brand_id: finalBrandId,
+                telegram: finalTelegramId,
                 stock_date,
                 exp_date,
                 qty,
                 unit_cost,
-                telegram,
                 status,
-                remark,
+                remark: remark && remark.trim(),
                 photo: photoUrl
             }
         )
@@ -103,8 +116,19 @@ const update = async (req, res) => {
         if (!result) { return res.status(404).json({ message: "ID not Found" }) }
 
         if (prd_name !== undefined) result.prd_name = prd_name
-        if (category_id !== undefined) result.category_id = (category_id && category_id.trim() !== "") ? category_id : null
-        if (brand_id !== undefined) result.brand_id = (brand_id && brand_id.trim() !== "") ? brand_id : null
+        const { Category, Brand, Telegram } = require("../models");
+        if (category_id !== undefined) {
+            const categoryExists = category_id ? await Category.findByPk(category_id) : null;
+            result.category_id = categoryExists ? category_id : null;
+        }
+        if (brand_id !== undefined) {
+            const brandExists = brand_id ? await Brand.findByPk(brand_id) : null;
+            result.brand_id = brandExists ? brand_id : null;
+        }
+        if (telegram !== undefined) {
+            const telegramExists = telegram ? await Telegram.findByPk(telegram) : null;
+            result.telegram = telegramExists ? telegram : null;
+        }
         if (stock_date !== undefined) result.stock_date = stock_date
         if (exp_date !== undefined) result.exp_date = exp_date
         if (qty !== undefined) result.qty = qty
