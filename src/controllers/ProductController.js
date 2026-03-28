@@ -128,13 +128,13 @@ const delete_ = async (req, res) => {
     try {
         const { prd_id } = req.params
         const result = await products.findByPk(prd_id)
-        if (!result) { return res.status(404).json({ meessage: "Product Id not Found" }) }
+        if (!result) { return res.status(404).json({ message: "Product Id not Found" }) }
         await result.destroy({
             where: {
                 prd_id: prd_id
             }
         })
-        res.status(200).json({ message: "Prodect Delete succussfully", data: result })
+        res.status(200).json({ message: "Product deleted successfully", data: result })
     }
     catch (err) {
         logError("delete", err, res)
