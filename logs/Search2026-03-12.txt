@@ -1,3 +1,0 @@
-[12/03/2026 13:27:16] open is not defined
-[12/03/2026 13:27:44] open is not defined
-[12/03/2026 13:32:32] open is not defined

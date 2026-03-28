@@ -1,3 +1,0 @@
-[15/03/2026 10:44:13] Invalid value { undefined: '%ZARA%' }
-[15/03/2026 10:46:54] Invalid value { undefined: '%ZARA%' }
-[15/03/2026 10:47:51] Invalid value { undefined: '%CAT%' }

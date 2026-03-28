@@ -1,4 +1,0 @@
-[16/03/2026 15:21:08] data is not defined
-[16/03/2026 15:22:00] Cannot access 'result' before initialization
-[16/03/2026 15:22:02] Cannot access 'result' before initialization
-[16/03/2026 15:23:25] Cannot access 'result' before initialization
