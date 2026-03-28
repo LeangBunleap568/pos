@@ -1,0 +1,1 @@
+[28/03/2026 17:38:19] Cannot add or update a child row: a foreign key constraint fails ("defaultdb"."tbl_brand", CONSTRAINT "tbl_brand_ibfk_1" FOREIGN KEY ("category_id") REFERENCES "tbl_category" ("code") ON DELETE SET NULL ON UPDATE CASCADE)

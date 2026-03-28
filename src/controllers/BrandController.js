@@ -51,7 +51,7 @@ const Create = async (req, res) => {
         const brandCreated = await Brand.create({
             code,
             desc,
-            category_id,
+            category_id: category_id || null,
             remark,
             photo: photoUrl
         })
@@ -74,7 +74,7 @@ const Update = async (req, res) => {
             return res.status(404).json({ message: "Brand not Found" })
         }
         data.desc = desc !== undefined ? desc : data.desc
-        data.category_id = category_id !== undefined ? category_id : data.category_id
+        data.category_id = (category_id && category_id.trim() !== "") ? category_id : (category_id === "" ? null : data.category_id)
         data.remark = remark !== undefined ? remark : data.remark
 
         if (photoUrl) {
